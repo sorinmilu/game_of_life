@@ -1,0 +1,367 @@
+    var block = [
+        [0,0,0,0],
+        [0,1,1,0],
+        [0,1,1,0],
+        [0,0,0,0]
+    ];
+
+    var tub = [
+        [0,0,0,0,0],
+        [0,0,1,0,0],
+        [0,1,0,1,0],
+        [0,0,1,0,0],
+        [0,0,0,0,0],
+    ];
+
+
+    var hive = [
+        [0,0,0,0,0,0],
+        [0,0,1,1,0,0],
+        [0,1,0,0,1,0],
+        [0,0,1,1,0,0],
+        [0,0,0,0,0,0]
+    ];
+
+    var loaf = [
+        [0,0,0,0,0,0],
+        [0,0,0,1,0,0],
+        [0,0,1,0,1,0],
+        [0,1,0,0,1,0],
+        [0,0,1,1,0,0],
+        [0,0,0,0,0,0]
+    ];
+
+    var barge = [
+        [0,0,0,0,0,0,0],
+        [0,0,1,0,0,0,0],
+        [0,1,0,1,0,0,0],
+        [0,0,1,0,1,0,0],
+        [0,0,0,1,0,0,0],
+        [0,0,0,0,0,0,0]
+    ];
+
+    var boat = [
+        [0,0,0,0,0],
+        [0,1,1,0,0],
+        [0,1,0,1,0],
+        [0,0,1,0,0],
+        [0,0,0,0,0]
+    ];
+
+    var ship = [
+        [0,0,0,0,0],
+        [0,1,1,0,0],
+        [0,1,0,1,0],
+        [0,0,1,1,0],
+        [0,0,0,0,0]
+    ];
+
+     HORTON.structures = [];
+
+     HORTON.structures.push({"name": 'block', "width" : 4, "height": 4, 'struct': block, 'color': '#f00', 'asymm': 0});
+     HORTON.structures.push({"name": 'hive', "width" : 6, "height": 5, 'struct': hive, 'color': '#ff0', 'asymm': 2});
+     HORTON.structures.push({"name": 'loaf', "width" : 6, "height": 6, 'struct': loaf, 'color': '#00f', 'asymm': 4});
+     HORTON.structures.push({"name": 'tub', "width" : 5, "height": 5, 'struct': tub, 'color': '#f0f', 'asymm': 0});
+     HORTON.structures.push({"name": 'barge', "width" : 7, "height": 6, 'struct': barge, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"name": 'boat', "width" : 5, "height": 5, 'struct': boat, 'color': '#f0f', 'asymm': 4});
+     HORTON.structures.push({"name": 'ship', "width" : 5, "height": 5, 'struct': ship, 'color': '#f0f', 'asymm': 2});
+
+//Structurile statice (still life) sunt structuri care raman identice de la o genratie la alta prin jocul regulilor. Acestea sunt foarte multe, aici se pot adauga
+// Structura este definita de:
+//   name - string, numele structurii cu care va aparea in interfata
+//   width - latimea structurii - latimea matricii in care este continuta structura (numarul de coloane)
+//   height - inaltimea structurii, inaltimea matricii in care este continuta structura (numarul de linii)
+//   struct - matricea in care este continuta structura (width/height, 0 reprezinta o celula moarta, 1 o celula vie)
+//   color - culoarea cu care va fi afisata structura
+//   asymm - asimetria structurii. Anumite structuri sunt asimetrice si pot aparea fie ca in matricea struct, fie rotite
+//          asymm 0 - structura este cautata doar in modul in care apare in matrice
+//          asymm 2 - structura va fi cautata in modul in care apare in matrice precum si rotita cu 90 de grade
+//          asumm 4 - structura este cautata in modul in care apare in matrice precum si rotita cu 90. 180 si 270 de grade
+//      asimetria trebuie specificata corect!
+//   software-ul nu identifica structurile aflate exact la marginea gridului
+
+
+     HORTON.positions = [];
+
+// functie adaugata la obiectul Array care permite transpunerea
+
+Array.prototype.transpose || (Array.prototype.transpose = function() {
+    if (!this.length) {
+        return [];
+    }
+
+    if (this[0] instanceof Array) {
+        var tlen = this.length,
+            dlen = this[0].length,
+            newA = new Array(dlen);
+    } else {
+        throw new Error("ceva nu merge");
+    }
+
+    for (var i = tlen; i--;) {
+        if (this[i].length !== dlen) throw new Error("Index Error!");
+    }
+
+    for (var i = 0; i < dlen; ++i) {
+        newA[i] = [];
+        for (var j = 0, l = tlen; j < l; j++) {
+            newA[i][j] = this[j][i];
+        }
+    }
+    return newA;
+});
+
+
+// cauta structurile statice in grid si le afiseaza
+
+function findStructures() {
+    HORTON.stills = {};
+    HORTON.positions = {};
+    resetColorsOgre();
+    var positionsreport = '';
+    document.getElementById('stillsreport').innerHTML = "";
+    for (var i = 0; i < HORTON.structures.length; i++) {
+        HORTON.stills[HORTON.structures[i].name] = 0;
+        var positions = findOneStructure(HORTON.structures[i]);
+        if (positions)
+        {
+            HORTON.positions[HORTON.structures[i].name] = [];
+            for (var k = 0; k < positions.length; k++) {
+                HORTON.stills[HORTON.structures[i].name]++;
+                HORTON.positions[HORTON.structures[i].name].push(positions[k]);
+            }
+        }
+    }
+
+     for (var key in HORTON.stills) {
+        if (HORTON.stills[key] > 0) {
+            positionsreport = positionsreport + key + ' ' + HORTON.stills[key].toString() + '<br>';
+            if (HORTON.positions[key]) {
+                for (var h = 0; h < HORTON.structures.length; h++) {
+                    if (key == HORTON.structures[h].name) {
+                      colorStructure(HORTON.structures[h],HORTON.positions[key]);
+                    }
+                }
+            }
+        }
+     }
+     document.getElementById('stillsreport').innerHTML = positionsreport;
+}
+
+// coloreaza o structura statica gasita
+
+function colorStructure(structure, positions) {
+    for (var k = 0; k < positions.length; k++) {
+        if (positions[k].rotation == 0) {
+            for (var i = positions[k].vert; i < (positions[k].vert + structure.height); i++) {
+                for (var j = positions[k].horiz; j < (positions[k].horiz + structure.width); j++) {
+                    var cell = document.getElementById(i + "_" + j);
+                    if (HORTON.grid[i][j] == 1) {
+                        cell.setAttribute("style", "background-color: " + structure.color);
+                        cell.classList.add("highlight");
+                    }
+                }
+            }
+        } else if (positions[k].rotation == 1) {
+            for (var i = positions[k].vert; i < (positions[k].vert + structure.width); i++) {
+                for (var j = positions[k].horiz; j < (positions[k].horiz + structure.height); j++) {
+                    var cell = document.getElementById(i + "_" + j);
+                    if (HORTON.grid[i][j] == 1) {
+                        cell.setAttribute("style", "background-color: " + structure.color);
+                        cell.classList.add("highlight");
+                    }
+                }
+            }
+        } else if (positions[k].rotation == 2) {
+            for (var i = positions[k].vert; i < (positions[k].vert + structure.height); i++) {
+                for (var j = positions[k].horiz; j < (positions[k].horiz + structure.width); j++) {
+                    var cell = document.getElementById(i + "_" + j);
+                    if (HORTON.grid[i][j] == 1) {
+                        cell.setAttribute("style", "background-color: " + structure.color);
+                        cell.classList.add("highlight");
+                    }
+                }
+            }
+        } else if (positions[k].rotation == 3) {
+            for (var i = positions[k].vert; i < (positions[k].vert + structure.width); i++) {
+                for (var j = positions[k].horiz; j < (positions[k].horiz + structure.height); j++) {
+                    var cell = document.getElementById(i + "_" + j);
+                    if (HORTON.grid[i][j] == 1) {
+                        cell.setAttribute("style", "background-color: " + structure.color);
+                        cell.classList.add("highlight");
+                    }
+                }
+            }
+        }
+
+    }
+
+}
+
+//deep Clone face o copie absoluta a unui array, care nu mai are nici o legatura cu arrayul original.
+
+function deepClone(array) {
+    return JSON.parse(JSON.stringify(array));
+}
+
+//identifica o anumita structura in grid.
+
+function findOneStructure(structure) {
+    var copyarray = deepClone(structure.struct);
+    var positions = [];
+
+    if (structure.asymm == 0) {
+        var testarray = copyarray;
+        for (var i = 0; i <= (HORTON.rows - structure.height); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.width); j++) {
+                var part = twodSlice(i, j, structure.width, structure.height);
+                    if (XORSum(structure.width, structure.height, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 0});
+                    }
+            }
+        }
+
+    } else if (structure.asymm == 4) {
+
+        var testarray = copyarray;
+        for (var i = 0; i <= (HORTON.rows - structure.height); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.width); j++) {
+                var part = twodSlice(i, j, structure.width, structure.height);
+                    if (XORSum(structure.width, structure.height, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 0});
+                    }
+            }
+        }
+
+        //rotim 90
+        // console.log('rotate 90');
+        var testarray = rotatep90(copyarray);
+        // printme(testarray);
+        for (var i = 0; i <= (HORTON.rows - structure.width); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.height); j++) {
+                var part = twodSlice(i, j, structure.height, structure.width);
+                if (XORSum(structure.height, structure.width, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 1});
+                }
+            }
+        }
+        // console.log('rotate 180');
+        var testarray = rotatep90(rotatep90(copyarray));
+        // printme(testarray);
+         for (var i = 0; i <= (HORTON.rows - structure.height); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.width); j++) {
+                var part = twodSlice(i, j, structure.width, structure.height);
+                if (XORSum(structure.width, structure.height, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 2});
+                }
+            }
+        }
+
+        //rotim 90
+        // console.log('rotate -90');
+        var testarray = rotatep90(rotatep90(rotatep90(copyarray)));
+        // printme(testarray);
+        for (var i = 0; i <= (HORTON.rows - structure.width); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.height); j++) {
+                var part = twodSlice(i, j, structure.height, structure.width);
+                if (XORSum(structure.height, structure.width, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 3});
+                }
+            }
+        }
+    } else if (structure.asymm == 2) {
+        //nu lucram pe arrayul principal ca il facem praf
+        var testarray = copyarray;
+        for (var i = 0; i <= (HORTON.rows - structure.height); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.width); j++) {
+                var part = twodSlice(i, j, structure.width, structure.height);
+                     if (XORSum(structure.width, structure.height, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 0});
+                    }
+            }
+        }
+
+        //rotim 90
+         var testarray = rotatep90(copyarray);
+         for (var i = 0; i <= (HORTON.rows - structure.width); i++) {
+            for (var j = 0; j <= (HORTON.cols - structure.height); j++) {
+                var part = twodSlice(i, j, structure.height, structure.width);
+                if (XORSum(structure.height, structure.width, testarray, part) == 0) {
+                        positions.push({'horiz': j, 'vert': i, rotation: 1});
+                }
+            }
+        }
+    }
+    return positions;
+}
+
+// suma XOR a doua matrici de dimensiuni identice: suma este 0 daca ele au aceleasi elemente pe aceleasi pozitii
+
+function XORSum(width, height, arr1, arr2) {
+    var xorsum = 0;
+
+    for (var i = 0; i < height; i++) {
+          for (var j = 0; j < width; j++) {
+              if (arr1[i][j] != arr2[i][j]) {
+                    xorsum++;
+                }
+          }
+      }
+    return xorsum;
+}
+
+//returneaza un slice bidimensional al matricii
+
+function twodSlice(row, col, width, height) {
+    var slice = []
+    for (var i = row; i < (row+height); i++) {
+        slice.push(HORTON.grid[i].slice(col, (col + width)));
+    }
+    return slice;
+}
+
+
+//afiseaza starea fiecarei celule pentru modul 2
+
+function displayDying() {
+    resetColorsOgre();
+    for (var i = 0; i < HORTON.rows; i++) {
+        for (var j = 0; j < HORTON.cols; j++) {
+            if (HORTON.grid[i][j] == 1 && HORTON.nextGrid[i][j] == 0) {
+                var cell = document.getElementById(i + "_" + j);
+                cell.style.backgroundColor = "#c5283d";
+            } else if (HORTON.grid[i][j] == 0 && HORTON.nextGrid[i][j] == 1) {
+                var cell = document.getElementById(i + "_" + j);
+                cell.style.backgroundColor = "#ffc857";
+            } else if (HORTON.grid[i][j] == 1 && HORTON.nextGrid[i][j] == 1) {
+                var cell = document.getElementById(i + "_" + j);
+                cell.style.backgroundColor = "#92aa83";
+            }
+        }
+    }
+}
+
+//roteste cu 90 de grade in directia acelor de ceas
+
+function rotatep90 (matrix) {
+    var tmatrix = matrix.slice();
+    var res = reverseRows(tmatrix.transpose());
+    return res;
+}
+
+//roteste cu 90 de grade in directia inversa acelor de ceas
+function rotaten90 (matrix) {
+    var tmatrix = matrix.slice();
+    var res = transpose(reverseRows(tmatrix));
+    return res;
+}
+
+//inverseaza randurile matricii
+function reverseRows (matrix) {
+    var result = [];
+    for (var i = 0; i < matrix.length; i++) {
+        result.push(matrix[i].reverse());
+    }
+    return result;
+}
+

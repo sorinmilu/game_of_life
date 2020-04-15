@@ -1,0 +1,50 @@
+<head>
+    <meta charset = "UTF-8" />
+    <title>The Game of Life</title>
+    <link rel="stylesheet" href="main.css">
+<script>
+    //minimal settings
+    window.HORTON = {};
+    HORTON.rows = 40;
+    HORTON.cols = 40;
+    HORTON.mode=1;
+    HORTON.reproductionTime = 200;
+
+</script>
+</head>
+<body>
+
+<div id="gridContainer">
+
+</div>
+
+<div class="controls">
+
+    Rows: <input id="i_rows" size="5" type="text" value="">
+    Cols: <input id="i_cols" size="5" type="text" value="">
+    <button id="change"><span>Change</span></button><br>
+    <button id="start"><span>Start</span></button>
+    <button id="clear"><span>Clear</span></button>
+    <button id="random"><span>Random</span></button>
+    <select id="i_mod">
+        <option value="0">Direct</option>
+        <option value="1">Afiseaza structurile stabile</option>
+        <option value="2">Afiseaza muribunzii</option>
+    </select>
+    <hr>
+    <label for="i_speed">Viteza (repejor pana la foarte incet):</label>
+    <input type="range" id="i_speed" name="points" min="0" max="1000" step="100">
+
+
+    <div id="gamereport"></div>
+
+    <div id="stillsreport"></div>
+
+</div>
+
+
+<script src="modes.js"></script>
+<script src="main.js"></script>
+<!--<script src="test.js"></script>-->
+
+</body>
