@@ -24,6 +24,20 @@ function H_initialize() {
     document.getElementById('i_speed').value = HORTON.reproductionTime;
     document.getElementById('i_mod').value = HORTON.mode;
 
+    var istart = document.getElementById("i_start");
+
+    console.log(istart);
+
+    if (HORTON.scenes.length > 0) {
+         for (var i = 0; i < HORTON.scenes.length; i++) {
+            var option = document.createElement("option");
+            option.text = HORTON.scenes[i].name;
+            option.value = HORTON.scenes[i].id;
+            console.log(option);
+            istart.appendChild(option);
+         }
+    }
+
     createTable();
     initializeGrids();
     resetGrids();
@@ -138,8 +152,8 @@ function setupControlButtons() {
     clearButton.onclick = clearButtonHandler;
 
     // populeaza aleator gridul
-    var randomButton = document.getElementById("random");
-    randomButton.onclick = randomButtonHandler;
+    // var randomButton = document.getElementById("random");
+    // randomButton.onclick = randomButtonHandler;
 
     // Modifica modul de afisare
     var modeselect = document.getElementById("i_mod");
@@ -148,6 +162,60 @@ function setupControlButtons() {
     // Modifica viteza de evolutie
     var slider = document.getElementById("i_speed");
     slider.onchange = sliderChangeHandler;
+
+    var start = document.getElementById("i_start");
+    start.onchange = startChangeHandler;
+}
+
+
+function startChangeHandler() {
+    console.log(this.value);
+    //random population
+    if (this.value == 1) {
+        populateRandom();
+    } else if (this.value > 1) {
+        populateStructure(this.value);
+    }
+}
+
+function populateStructure(structid) {
+    if (HORTON.scenes.length > 0) {
+        for (var i = 0; i < HORTON.scenes.length; i++) {
+            if (HORTON.scenes[i].id == structid) {
+                //refacem gridul cu noile dimensiuni
+                HORTON.cols = HORTON.scenes[i].scenewidth;
+                HORTON.rows = HORTON.scenes[i].sceneheight;
+                document.getElementById('i_rows').value = HORTON.rows;
+                document.getElementById('i_cols').value = HORTON.cols;
+
+                if (HORTON.playing) {
+                    HORTON.playing = false;
+                    clearTimeout(HORTON.timer);
+                }
+                initializeGrids();
+                resetGrids();
+                document.getElementById('gridContainer').innerHTML = "";
+                createTable();
+                placeScene(HORTON.scenes[i]);
+                console.log(HORTON.grid);
+//                redrawGrid();
+            }
+        }
+    }
+}
+
+
+function placeScene(scene) {
+     for (var i = 0; i < scene.blockheight; i++) {
+         for (var j = 0; j < scene.blockwidth; j++) {
+            if (scene.struct[i][j] == 1) {
+                console.log('placing one at: ' + (i + scene.blocky).toString() + ' ' + (j + scene.blockx).toString());
+                HORTON.grid[i + scene.blocky][j+scene.blockx] = 1;
+                var cell = document.getElementById((i + scene.blocky) + "_" + (j + scene.blockx));
+                cell.setAttribute("class", "live");
+            }
+         }
+     }
 }
 
 //handler pentru schimbarea modului de afisare
@@ -161,7 +229,7 @@ function modeChangeHandler() {
 }
 
 // handler pentru popularea aleatoare
-function randomButtonHandler() {
+function populateRandom() {
     if (HORTON.playing) return;
     clearButtonHandler();
     for (var i = 0; i < HORTON.rows; i++) {
@@ -246,11 +314,14 @@ function play() {
     if (HORTON.mode == 1) {
         findStructures();
     }
+    console.log('nex generation');
     nextGeneration();
     if (HORTON.mode == 2) {
         displayDying();
     }
+    console.log('copy and reset');
     copyAndResetGrid();
+    console.log('updateview');
     updateView();
     if (HORTON.playing) {
         HORTON.timer = setTimeout(play, HORTON.reproductionTime);

@@ -7,7 +7,7 @@
     window.HORTON = {};
     HORTON.rows = 40;
     HORTON.cols = 40;
-    HORTON.mode=1;
+    HORTON.mode=2;
     HORTON.reproductionTime = 200;
 
 </script>
@@ -25,12 +25,24 @@
     <button id="change"><span>Change</span></button><br>
     <button id="start"><span>Start</span></button>
     <button id="clear"><span>Clear</span></button>
-    <button id="random"><span>Random</span></button>
+
+
+
+    <label for = "i_start">Pornire</label>
+
+    <select id="i_start">
+        <option value="0">Empty</option>
+        <option value="1">Random</option>
+    </select>
+
+
+
     <select id="i_mod">
         <option value="0">Direct</option>
         <option value="1">Afiseaza structurile stabile</option>
-        <option value="2">Afiseaza muribunzii</option>
+        <option value="2">Afiseaza starea celulelor</option>
     </select>
+
     <hr>
     <label for="i_speed">Viteza (repejor pana la foarte incet):</label>
     <input type="range" id="i_speed" name="points" min="0" max="1000" step="100">
@@ -44,7 +56,9 @@
 
 
 <script src="modes.js"></script>
+<script src="scenes.js"></script>
 <script src="main.js"></script>
+
 <!--<script src="test.js"></script>-->
 
 </body>
