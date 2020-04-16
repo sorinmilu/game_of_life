@@ -225,6 +225,9 @@ function modeChangeHandler() {
         resetColorsOgre();
         document.getElementById('stillsreport').innerHTML = '';
     }
+    if (this.value == 1) {
+        displayStills();
+    }
     HORTON.mode = this.value;
 }
 

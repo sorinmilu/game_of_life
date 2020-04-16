@@ -310,6 +310,12 @@ function XORSum(width, height, arr1, arr2) {
     return xorsum;
 }
 
+//functia afiseaza toate stills-urile in containerul stillsreport
+
+function displayStills() {
+
+}
+
 //returneaza un slice bidimensional al matricii
 
 function twodSlice(row, col, width, height) {
