@@ -315,7 +315,7 @@ function buildSceneTable(struct) {
             var cell = document.createElement("td");
             if (struct.struct[i][j] == 1) {
 //            cell.setAttribute("id", i + "_" + j);
-                cell.setAttribute("style", "background-color: #92aa83;");
+                cell.setAttribute("style", "background-color: #e2c044;");
             }
         tr.appendChild(cell);
         }
