@@ -31,6 +31,31 @@ td {
     height: 8px;
 }
 
+.stilltable {
+    align-self: center;
+}
+.stilltable td {
+        width: 5px;
+        height: 5px;
+}
+
+.stillname {
+    width: 150px;
+    float:left;
+    color: #d0782a;
+    font-size: 16px;
+    align-self: center;
+    padding-left: 10px;
+}
+
+.stilldisplay {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+
 span {
     color: #222;
 }
@@ -45,12 +70,18 @@ td.live {
 
 #gamereport {
     margin-top: 10px;
-    color:#35281d;
+    color:#809bbd;
+    height: 20px;
+    font-size: 22px;
+    margin-bottom:10px;
+
+
 }
 
 #stillsreport {
-    margin-top: 10px;
-    color:#35281d;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 html {

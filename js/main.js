@@ -26,14 +26,11 @@ function H_initialize() {
 
     var istart = document.getElementById("i_start");
 
-    console.log(istart);
-
     if (HORTON.scenes.length > 0) {
          for (var i = 0; i < HORTON.scenes.length; i++) {
             var option = document.createElement("option");
             option.text = HORTON.scenes[i].name;
             option.value = HORTON.scenes[i].id;
-            console.log(option);
             istart.appendChild(option);
          }
     }

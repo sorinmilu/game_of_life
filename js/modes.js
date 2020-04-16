@@ -58,13 +58,13 @@
 
      HORTON.structures = [];
 
-     HORTON.structures.push({"name": 'block', "width" : 4, "height": 4, 'struct': block, 'color': '#f00', 'asymm': 0});
-     HORTON.structures.push({"name": 'hive', "width" : 6, "height": 5, 'struct': hive, 'color': '#ff0', 'asymm': 2});
-     HORTON.structures.push({"name": 'loaf', "width" : 6, "height": 6, 'struct': loaf, 'color': '#00f', 'asymm': 4});
-     HORTON.structures.push({"name": 'tub', "width" : 5, "height": 5, 'struct': tub, 'color': '#f0f', 'asymm': 0});
-     HORTON.structures.push({"name": 'barge', "width" : 7, "height": 6, 'struct': barge, 'color': '#f0f', 'asymm': 2});
-     HORTON.structures.push({"name": 'boat', "width" : 5, "height": 5, 'struct': boat, 'color': '#f0f', 'asymm': 4});
-     HORTON.structures.push({"name": 'ship', "width" : 5, "height": 5, 'struct': ship, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"id":1,  "name": 'block', "width" : 4, "height": 4, 'struct': block, 'color': '#f00', 'asymm': 0});
+     HORTON.structures.push({"id":2,"name": 'hive', "width" : 6, "height": 5, 'struct': hive, 'color': '#ff0', 'asymm': 2});
+     HORTON.structures.push({"id":3,"name": 'loaf', "width" : 6, "height": 6, 'struct': loaf, 'color': '#00f', 'asymm': 4});
+     HORTON.structures.push({"id":4,"name": 'tub', "width" : 5, "height": 5, 'struct': tub, 'color': '#f0f', 'asymm': 0});
+     HORTON.structures.push({"id":5,"name": 'barge', "width" : 7, "height": 6, 'struct': barge, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"id":6,"name": 'boat', "width" : 5, "height": 5, 'struct': boat, 'color': '#f0f', 'asymm': 4});
+     HORTON.structures.push({"id":7,"name": 'ship', "width" : 5, "height": 5, 'struct': ship, 'color': '#f0f', 'asymm': 2});
 
 //Structurile statice (still life) sunt structuri care raman identice de la o genratie la alta prin jocul regulilor. Acestea sunt foarte multe, aici se pot adauga
 // Structura este definita de:
@@ -118,34 +118,37 @@ function findStructures() {
     HORTON.stills = {};
     HORTON.positions = {};
     resetColorsOgre();
-    var positionsreport = '';
-    document.getElementById('stillsreport').innerHTML = "";
     for (var i = 0; i < HORTON.structures.length; i++) {
-        HORTON.stills[HORTON.structures[i].name] = 0;
+        HORTON.stills[HORTON.structures[i].id] = 0;
         var positions = findOneStructure(HORTON.structures[i]);
         if (positions)
         {
-            HORTON.positions[HORTON.structures[i].name] = [];
+            HORTON.positions[HORTON.structures[i].id] = [];
             for (var k = 0; k < positions.length; k++) {
-                HORTON.stills[HORTON.structures[i].name]++;
-                HORTON.positions[HORTON.structures[i].name].push(positions[k]);
+                HORTON.stills[HORTON.structures[i].id]++;
+                HORTON.positions[HORTON.structures[i].id].push(positions[k]);
             }
         }
     }
 
      for (var key in HORTON.stills) {
         if (HORTON.stills[key] > 0) {
-            positionsreport = positionsreport + key + ' ' + HORTON.stills[key].toString() + '<br>';
+//            positionsreport = positionsreport + key + ' ' + HORTON.stills[key].toString() + '<br>';
+
             if (HORTON.positions[key]) {
                 for (var h = 0; h < HORTON.structures.length; h++) {
-                    if (key == HORTON.structures[h].name) {
+                    if (key == HORTON.structures[h].id) {
                       colorStructure(HORTON.structures[h],HORTON.positions[key]);
+
+                      document.getElementById('struct-' + key.toString()).innerHTML=HORTON.structures[h].name + ': ' + HORTON.stills[key].toString();
                     }
                 }
             }
         }
      }
-     document.getElementById('stillsreport').innerHTML = positionsreport;
+
+
+//     document.getElementById('stillsreport').innerHTML = positionsreport;
 }
 
 // coloreaza o structura statica gasita
@@ -313,8 +316,44 @@ function XORSum(width, height, arr1, arr2) {
 //functia afiseaza toate stills-urile in containerul stillsreport
 
 function displayStills() {
-
+    for (var i = 0; i < HORTON.structures.length; i++) {
+           var structcontainer = buildStillTable(HORTON.structures[i]);
+           document.getElementById('stillsreport').appendChild(structcontainer);
+    }
 }
+
+function buildStillTable(struct) {
+
+    var structcontainer = document.createElement("div");
+    structcontainer.classList.add("stilldisplay");
+
+    var table = document.createElement("table");
+    table.classList.add("stilltable");
+
+    for (var i = 0; i < struct.height; i++) {
+        var tr = document.createElement("tr");
+        for (var j = 0; j < struct.width; j++) {//
+            console.log('addin cell' + i + ' ' + j);
+            var cell = document.createElement("td");
+            if (struct.struct[i][j] == 1) {
+//            cell.setAttribute("id", i + "_" + j);
+                cell.setAttribute("style", "background-color: " + struct.color);
+            }
+        tr.appendChild(cell);
+        }
+       table.appendChild(tr);
+    }
+    structcontainer.appendChild(table);
+    var namescontainer = document.createElement("div");
+    namescontainer.classList.add('stillname');
+    namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
+    namescontainer.innerHTML = struct.name + ': ' + '0';
+    structcontainer.appendChild(namescontainer);
+    return structcontainer;
+}
+
+
+
 
 //returneaza un slice bidimensional al matricii
 
