@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset = "UTF-8" />
+    <title>The Game of Life</title>
+    <link rel="stylesheet" href="css/main.css">
+<script>
+    //minimal settings
+    window.HORTON = {};
+    HORTON.rows = 40;
+    HORTON.cols = 40;
+    HORTON.mode=2;
+    HORTON.reproductionTime = 200;
+
+</script>
+</head>
+<body>
+
+
+
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>John Horton Conway - Game of Life</title>
+        <meta content="game of life" name="description">
+        <link href="css/main.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body class="body silver">
+        <div class="navbar fixednav w-nav">
+            <a href="index.html" aria-current="page" class="brand w-nav-brand w--current">
+                <img src="img/logo.png" alt="Game of Life logo" id="logo">
+            </a>
+            <nav role="navigation" class="nav-menu w-nav-menu">
+                    <a href="game_of_life.html" class="cta nav-link w-nav-link">Lansează Game of life</a>
+                    <a href="about_jc.html" class="nav-link w-nav-link">Despre John Conway</a>
+                    <a href="about_gol.html" class="nav-link w-nav-link">Despre Game of Life</a>
+                    <a href="about_this_site.html" class="nav-link w-nav-link">Despre acest site</a>
+            </nav>
+
+            <div class="menu-button w-nav-button"><img src="img/icon-hamburger-dark.svg" alt="" class="image-6"></div>
+            <div class="w-nav-overlay" data-wf-ignore=""></div>
+        </div>
+
+        <div class="container">
+
+<div class="main-game">
+
+
+
+<div id="gridContainer">
+
+</div>
+
+<div id="nonGridContainer">
+<div class="controls">
+
+    Rows: <input id="i_rows" size="5" type="text" value="">
+    Cols: <input id="i_cols" size="5" type="text" value="">
+    <button class="w-button" id="change"><span>Modifica gridul</span></button><br>
+
+
+
+    <label for = "i_start">Initializare</label>
+
+    <select id="i_start">
+        <option value="0">Gol (setati celulele cu mouseul)</option>
+        <option value="1">Populare aleatoare</option>
+    </select>
+    <br>
+
+    <button class="w-button" id="start"><span>Start</span></button>
+    <button class="w-button" id="clear"><span>Resetare a gridului</span></button>
+
+
+    <label for = "i_mod">Mod de afisare</label>
+    <select id="i_mod">
+        <option value="0">Direct</option>
+        <option value="1">Afiseaza structurile stabile</option>
+        <option value="2">Afiseaza starea celulelor</option>
+    </select>
+
+    <hr>
+    <label for="i_speed">Viteza (repejor pana la foarte incet):</label>
+    <input type="range" id="i_speed" name="points" min="0" max="1000" step="100">
+
+
+    <div id="gamereport"></div>
+
+    <div id="stillsreport"></div>
+
+</div>
+
+
+<script src="js/modes.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/main.js"></script>
+
+</div>
+     </div>
+        </div>
+
+    </body>
+
+</html>
