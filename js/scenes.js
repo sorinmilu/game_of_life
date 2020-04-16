@@ -259,7 +259,10 @@ var tencell = [
 
      // id mai mare decat 2
 
-     HORTON.scenes.push({"id": 2, "name": 'Dart (David Bell)', "blockwidth" : 15, "blockheight": 11, 'struct': dart, "scenewidth": 19, "sceneheight": 60, "blockx": 2, "blocky": 40});
+     HORTON.scenes.push({"id": 2,
+                         "name": 'Dart (David Bell)',
+                         "description": "Dart - structura ",
+                         "blockwidth" : 15, "blockheight": 11, 'struct': dart, "scenewidth": 19, "sceneheight": 60, "blockx": 2, "blocky": 40});
      HORTON.scenes.push({"id": 3, "name": 'Pufferfish spaceship (Ivan Fomichev)', "blockwidth" : 53, "blockheight": 37, 'struct': ship, "scenewidth": 60, "sceneheight": 90, "blockx": 3, "blocky": 50});
      HORTON.scenes.push({"id": 4, "name": 'Statorless (Josh Ball)', "blockwidth" : 15, "blockheight": 14, 'struct': statorless, "scenewidth": 20, "sceneheight": 20, "blockx": 2, "blocky": 2});
      HORTON.scenes.push({"id": 5, "name": 'Pufferfish (David Bell)', "blockwidth" : 15, "blockheight": 12, 'struct': pufferfish, "scenewidth": 19, "sceneheight": 40, "blockx": 2, "blocky": 25});

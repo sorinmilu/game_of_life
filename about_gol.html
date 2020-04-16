@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>John Horton Conway - Game of Life</title>
+        <meta content="game of life" name="description">
+        <link href="css/main.css" rel="stylesheet" type="text/css">
+    </head>
+
+    <body class="body silver">
+        <div class="navbar fixednav w-nav">
+            <a href="index.html" aria-current="page" class="brand w-nav-brand w--current">
+                <img src="img/logo.png" alt="Game of Life logo" id="logo">
+            </a>
+            <nav role="navigation" class="nav-menu w-nav-menu">
+                    <a href="game_of_life.html" class="nav-link w-nav-link">Lansează Game of life</a>
+                    <a href="about_jc.html" class="nav-link w-nav-link">Despre John Conway</a>
+                    <a href="about_gol.html" class="cta nav-link w-nav-link">Despre Game of Life</a>
+                    <a href="about_this_site.html" class="nav-link w-nav-link">Despre acest site</a>
+            </nav>
+
+            <div class="menu-button w-nav-button"><img src="img/icon-hamburger-dark.svg" alt="" class="image-6"></div>
+            <div class="w-nav-overlay" data-wf-ignore=""></div>
+        </div>
+
+        <div class="container">
+            <div class="main-text">
+                <div class="typer">Game of Life</div>
+                <div class="text-block link">
+                    <p>Game of Life este un sistem discret bidimensional si ortogonal de modelare a unei populatii de celule. Game of Life face parte din categoria mai generala numita Automate Celulare.</p>
+                </div>
+                <div class="typer">Cum functioneaza Game of Life</div>
+                <div class="text-block link">
+                <p>
+                Se porneste de la o retea ortogonala (grid) de celule, unele dintre ele fiind "in viata", celelalte moarte. Simularea se deruleaza pas cu pas, la fiecare pas se calculeaza viitoarea stare a fiecarei celule in functie de urmatoarele reguli:
+                    <ul>
+                        <li>Orice celula vie care are mai putin de doi vecini vii moare de izolare</li>
+                        <li>Orice celula vie care are doi sau trei vecini traieste</li>
+                        <li>Orice celula vie care are mai mult de trei vecini moare datorita suprapopulatiei</li>
+                        <li>Orice celula moarta care are exact trei vecini va deveni o celula vie (reproducere)</li>
+                    </ul>
+                </p>
+                <p>Game of Life este o modelare "pesimista" - de obicei se termina fie cu cateva structuri stabile (vezi mai jos) sau cu toate celulele moarte.  </p>
+
+                </div>
+
+                <div class="typer">De ce este interesat Game of Life?</div>
+                <div class="text-block link">
+                <p>
+
+                Game of Life este interesant pentru ca, desi un model extrem de rudimentar, poate da nastere la sisteme extrem de complexe si cu comportament neasteptat. De exemplu, exista structuri izolate numite "sill life" care raman neschimbate daca nu sunt "atinse" de alte celule. In ciuda faptului ca regulile se aplica de fiecare data, este posibil ca anumite forme sa ramana neschimbate in timp.
+                O alta geometrie extrem de interesanta sunt formele oscilante care se pot modifica putin geometric dar pot mentine numarul populatiei aproximativ constant un timp nedefinit.
+                </p>
+                </div>
+
+
+
+
+             </div>
+        </div>
+
+    </body>
+</html>
