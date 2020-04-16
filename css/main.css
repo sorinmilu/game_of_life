@@ -84,6 +84,58 @@ td.live {
     flex-wrap: wrap;
 }
 
+#scenesreport {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.mediumscenetable, .smallscenetable, .largescenetable {
+    align-self: center;
+}
+
+.smallscenetable td {
+        width: 10px;
+        height: 10px;
+}
+
+.mediumscenetable td {
+        width: 5px;
+        height: 5px;
+}
+
+.largescenetable td {
+        width: 2px;
+        height: 2px;
+}
+
+.structdescription {
+    color: #ddca7e;
+    width: 250px;
+}
+
+.scenename {
+    float:left;
+    color: #d0782a;
+    font-size: 16px;
+    align-self: center;
+    padding-left: 10px;
+}
+
+.scenedisplay {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    width: 550px;
+    margin-bottom: 20px;
+    margin-right:3px;
+    padding: 5px;
+    border:1px solid #a7925a;
+}
+
+
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;

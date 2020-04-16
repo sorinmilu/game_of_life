@@ -13,6 +13,11 @@
         <script>
             //minimal settings
             window.HORTON = {};
+            function displayStructures() {
+                    H_displayStills('stillsreport');
+                    H_displayScenes('scenesreport');
+            }
+
         </script>
 
     </head>
@@ -42,22 +47,28 @@
 
                 <div class="typer">Identificarea structurilor stabile (still life)</div>
                 <div class="text-block link">
-                    Pus in modul "Afiseaza structurile stabile" sistemul identifica si numara cateva dintre structurile stabile care pot aparea in timpul unei simulari.
+                    Pus in modul "Afiseaza structurile stabile", sistemul identifica si numara cateva dintre structurile stabile care pot aparea in timpul unei simulari.
                     In acest moment, sistemul poate identifica urmatoarele structuri:
                     <br><br>
                     <div id="stillsreport"></div>
                     <br>
                     Se pot adauga mai multe structuri dar algoritmul de identificare nu e optimizat si e posibil sa incetineasca sistemul semnificativ.
                 </div>
+                 <div class="typer">Modele de start predefinite</div>
+                <div class="text-block link">
+                    Structurile de pornire predefinite sunt structuri descoperite de-a lungul timpului si despre care se stie ca produc efecte geometrice interesante. Unele oscileaza, altele se deplaseaza pe o anumita directie fara sa-si modifice foarte mult structura... etc.
+                    <br><br>
+                    <div id="scenesreport"></div>
 
 
+                </div>
         </div>
 
     </body>
      <script src="js/modes.js"></script>
+    <script src="js/scenes.js"></script>
 <script>
-    window.onload = H_displayStills('stillsreport');
-
+    window.onload = displayStructures();
 </script>
 
 </html>
