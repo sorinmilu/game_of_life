@@ -322,6 +322,17 @@ function displayStills() {
     }
 }
 
+function H_displayStills(container) {
+    console.log(container);
+    for (var i = 0; i < HORTON.structures.length; i++) {
+           var structcontainer = buildStillTable(HORTON.structures[i]);
+           document.getElementById(container).appendChild(structcontainer);
+    }
+}
+
+
+
+
 function buildStillTable(struct) {
 
     var structcontainer = document.createElement("div");
@@ -333,7 +344,6 @@ function buildStillTable(struct) {
     for (var i = 0; i < struct.height; i++) {
         var tr = document.createElement("tr");
         for (var j = 0; j < struct.width; j++) {//
-            console.log('addin cell' + i + ' ' + j);
             var cell = document.createElement("td");
             if (struct.struct[i][j] == 1) {
 //            cell.setAttribute("id", i + "_" + j);
@@ -347,7 +357,7 @@ function buildStillTable(struct) {
     var namescontainer = document.createElement("div");
     namescontainer.classList.add('stillname');
     namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
-    namescontainer.innerHTML = struct.name + ': ' + '0';
+    namescontainer.innerHTML = struct.name;
     structcontainer.appendChild(namescontainer);
     return structcontainer;
 }

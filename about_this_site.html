@@ -8,6 +8,13 @@
         <title>John Horton Conway - Game of Life</title>
         <meta content="game of life" name="description">
         <link href="css/main.css" rel="stylesheet" type="text/css">
+
+
+        <script>
+            //minimal settings
+            window.HORTON = {};
+        </script>
+
     </head>
 
     <body class="body silver">
@@ -31,10 +38,26 @@
                 <div class="typer">Simulare Game Of Life</div>
                 <div class="text-block link">
                     Simulare rudimentara, cu un algoritm simplu, fara pretentii
-
                 </div>
+
+                <div class="typer">Identificarea structurilor stabile (still life)</div>
+                <div class="text-block link">
+                    Pus in modul "Afiseaza structurile stabile" sistemul identifica si numara cateva dintre structurile stabile care pot aparea in timpul unei simulari.
+                    In acest moment, sistemul poate identifica urmatoarele structuri:
+                    <br><br>
+                    <div id="stillsreport"></div>
+                    <br>
+                    Se pot adauga mai multe structuri dar algoritmul de identificare nu e optimizat si e posibil sa incetineasca sistemul semnificativ.
+                </div>
+
 
         </div>
 
     </body>
+     <script src="js/modes.js"></script>
+<script>
+    window.onload = H_displayStills('stillsreport');
+
+</script>
+
 </html>
