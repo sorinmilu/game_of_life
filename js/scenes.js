@@ -270,7 +270,9 @@ var tencell = [
                          "description": "Sunt mai multe tipuri de astfel de structuri, in general sunt nave spatiale construite cu ajutorul uneia sau mai multe structuri de tip pufferfish",
                          "blockwidth" : 53, "blockheight": 37, 'struct': ship, "scenewidth": 60, "sceneheight": 90, "blockx": 3, "blocky": 50});
      HORTON.scenes.push({"id": 4, "name": 'Statorless (Josh Ball)', "blockwidth" : 15, "blockheight": 14, 'struct': statorless, "scenewidth": 20, "sceneheight": 20, "blockx": 2, "blocky": 2});
-     HORTON.scenes.push({"id": 5, "name": 'Pufferfish (David Bell)', "blockwidth" : 15, "blockheight": 12, 'struct': pufferfish, "scenewidth": 19, "sceneheight": 40, "blockx": 2, "blocky": 25});
+     HORTON.scenes.push({"id": 5, "name": 'Pufferfish (David Bell)',
+                          'description': "Un pufferfish este un caz particular de puffer - un obiect care se misca asemanator unei nave spatiale dar care lasa fragmente in urma sa",
+                         "blockwidth" : 15, "blockheight": 12, 'struct': pufferfish, "scenewidth": 19, "sceneheight": 40, "blockx": 2, "blocky": 25});
      HORTON.scenes.push({"id": 6, "name": 'Voldiag (Unknown)', "blockwidth" : 26, "blockheight": 26, 'struct': voldiag, "scenewidth": 30, "sceneheight": 30, "blockx": 2, "blocky": 2});
      HORTON.scenes.push({"id": 7, "name": 'Spider (David Bell)', "blockwidth" : 27, "blockheight": 8, 'struct': spider, "scenewidth": 33, "sceneheight": 50, "blockx": 3, "blocky": 30});
      HORTON.scenes.push({"id": 8, "name": '56P6H1V0 (Hartmut Holzwart)', "blockwidth" : 26, "blockheight": 12, 'struct': P6H1V0, "scenewidth": 33, "sceneheight": 50, "blockx": 3, "blocky": 30});
@@ -299,16 +301,19 @@ function buildSceneTable(struct) {
     var structcontainer = document.createElement("div");
     structcontainer.classList.add("scenedisplay");
     var structsize = Math.max(struct.blockheight, struct.blockwidth);
-
     var table = document.createElement("table");
+    var twidth = 0;
     if (structsize <= 10) {
         table.classList.add("smallscenetable");
+        twidth = struct.blockwidth * 10;
     } else if  (structsize > 10 && structsize <= 25) {
         table.classList.add("mediumscenetable");
+        twidth = struct.blockwidth * 5;
     } else if  (structsize > 25 ) {
         table.classList.add("largescenetable");
+        twidth = struct.blockwidth ;
     }
-
+    table.setAttribute("width", twidth.toString()+ "px");
     for (var i = 0; i < struct.blockheight; i++) {
         var tr = document.createElement("tr");
         for (var j = 0; j < struct.blockwidth; j++) {//
@@ -323,7 +328,7 @@ function buildSceneTable(struct) {
     }
     structcontainer.appendChild(table);
     var namescontainer = document.createElement("div");
-    namescontainer.classList.add('stillname');
+    namescontainer.classList.add('scenename');
     namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
     if (struct.description) {
         var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div';

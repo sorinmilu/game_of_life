@@ -93,6 +93,7 @@ td.live {
 
 .mediumscenetable, .smallscenetable, .largescenetable {
     align-self: center;
+     flex: 1 0 100%;
 }
 
 .smallscenetable td {
@@ -106,17 +107,16 @@ td.live {
 }
 
 .largescenetable td {
-        width: 2px;
-        height: 2px;
+        width: 1px;
+        height: 1px;
 }
 
 .structdescription {
     color: #ddca7e;
-    width: 250px;
+    width: auto;
 }
 
 .scenename {
-    float:left;
     color: #d0782a;
     font-size: 16px;
     align-self: center;
@@ -127,7 +127,7 @@ td.live {
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
-    width: 550px;
+    width: 500px;
     margin-bottom: 20px;
     margin-right:3px;
     padding: 5px;
