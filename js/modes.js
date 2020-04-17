@@ -385,16 +385,30 @@ function displayDying() {
             if (HORTON.grid[i][j] == 1 && HORTON.nextGrid[i][j] == 0) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.style.backgroundColor = "#c5283d";
+                HORTON.deaths ++;
+
             } else if (HORTON.grid[i][j] == 0 && HORTON.nextGrid[i][j] == 1) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.style.backgroundColor = "#ffc857";
             } else if (HORTON.grid[i][j] == 1 && HORTON.nextGrid[i][j] == 1) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.style.backgroundColor = "#92aa83";
+                HORTON.births ++;
             }
         }
     }
+    updateDeathReport();
 }
+
+
+function updateDeathReport() {
+    var report = '<span style="color: #ffc857;">Total morti: ' + HORTON.deaths + '</span><br><span style="color: #c5283d;">' + ' Total nasteri: ' + HORTON.births + '</span>';
+    document.getElementById('deathsreport').innerHTML = report;
+}
+
+
+
+
 
 //roteste cu 90 de grade in directia acelor de ceas
 

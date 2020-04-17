@@ -331,9 +331,9 @@ function buildSceneTable(struct) {
     namescontainer.classList.add('scenename');
     namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
     if (struct.description) {
-        var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div';
+        var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div>' + '</div><div class="structlaunch"><a class="l-button" href="game_of_life.html#lstruct-'+ struct.id +'">Lanseaza acest model</a></div>';
     } else {
-        var newhtml = '<div class="structname">' + struct.name + '</div>';
+        var newhtml = '<div class="structname">' + struct.name + '</div><div class="structlaunch"><a  class="l-button"  href="game_of_life.html#lstruct-'+ struct.id +'">Lanseaza acest model</a></div>';
     }
 
     console.log(newhtml);

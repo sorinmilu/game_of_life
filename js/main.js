@@ -16,14 +16,15 @@ function H_initialize() {
     HORTON.sumNext = 0;
     HORTON.stableCycles = 0;
     HORTON.cycles = 0;
+    HORTON.births = 0;
+    HORTON.deaths = 0;
 
     //elementele de interfata
 
-    document.getElementById('i_rows').value = HORTON.rows;
-    document.getElementById('i_cols').value = HORTON.cols;
-    document.getElementById('i_speed').value = HORTON.reproductionTime;
-    document.getElementById('i_mod').value = HORTON.mode;
+    //hash
 
+
+    // populeaza selectul de scene
     var istart = document.getElementById("i_start");
 
     if (HORTON.scenes.length > 0) {
@@ -35,10 +36,23 @@ function H_initialize() {
          }
     }
 
-    createTable();
-    initializeGrids();
-    resetGrids();
+    if (window.location.hash) {
+        var pieces = window.location.hash.split('-');
+        //update la select
+        document.getElementById('i_start').value = pieces[1];
+        populateStructure(pieces[1]);
+    } else {
+        document.getElementById('i_rows').value = HORTON.rows;
+        document.getElementById('i_cols').value = HORTON.cols;
+        document.getElementById('i_speed').value = HORTON.reproductionTime;
+        document.getElementById('i_mod').value = HORTON.mode;
+        createTable();
+        initializeGrids();
+        resetGrids();
+    }
+
     setupControlButtons();
+
 }
 
 //goleste si defineste cele doua griduri
@@ -95,6 +109,40 @@ function createTable() {
 }
 
 
+function displaySumCurrent() {
+    //how the fuck do we do this?
+    // we need a table. We add a column to the table? mai bine incercam sa adaugam un rand
+    var dtable = document.getElementById('populationdisplay');
+    console.log(dtable);
+    //randul poate avea valori pornind de la 0 pana la HORTON.rows * HORTON.cols Daca o celula are 2 pixeli
+    //si incercam sa afisam pe 200 de pixeli, avem 100 de celule, trebuie sa scalam valoarea curenta
+    var maxpixels = 100;
+    var cvalue = Math.round((HORTON.sumCurrent * 100) / (HORTON.rows * HORTON.cols));
+    console.log('cvalue is: ' + cvalue);
+    console.log('top part is: ' + HORTON.sumCurrent * 100);
+    console.log('sumcurrent: ' + HORTON.sumCurrent);
+    console.log('Bottom part: ' + HORTON.rows * HORTON.cols);
+
+    var tr = document.createElement("tr");
+
+    for  (var i = 0; i < maxpixels; i++) {
+
+        var cell = document.createElement("td");
+//        cell.setAttribute("class", "populationcell");
+        if (i < cvalue) {
+              cell.setAttribute("style", "background-color: #92aa83;border-bottom:1px solid  #1D2528;");
+        }
+        tr.appendChild(cell);
+    }
+    dtable.appendChild(tr);
+
+//    document.getElementById('populationreport').scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+      document.getElementById('populationdisplay').scrollIntoView(false);
+
+
+}
+
 function redrawGrid() {
     document.getElementById('gridContainer').innerHTML = "";
     createTable();
@@ -132,6 +180,7 @@ function updateView() {
              }
          }
      }
+
 }
 
 //seteaza evenimentele pentru elementele de control
@@ -206,7 +255,6 @@ function placeScene(scene) {
      for (var i = 0; i < scene.blockheight; i++) {
          for (var j = 0; j < scene.blockwidth; j++) {
             if (scene.struct[i][j] == 1) {
-                console.log('placing one at: ' + (i + scene.blocky).toString() + ' ' + (j + scene.blockx).toString());
                 HORTON.grid[i + scene.blocky][j+scene.blockx] = 1;
                 var cell = document.getElementById((i + scene.blocky) + "_" + (j + scene.blockx));
                 cell.setAttribute("class", "live");
@@ -314,14 +362,11 @@ function play() {
     if (HORTON.mode == 1) {
         findStructures();
     }
-    console.log('nex generation');
     nextGeneration();
     if (HORTON.mode == 2) {
         displayDying();
     }
-    console.log('copy and reset');
     copyAndResetGrid();
-    console.log('updateview');
     updateView();
     if (HORTON.playing) {
         HORTON.timer = setTimeout(play, HORTON.reproductionTime);
@@ -336,23 +381,22 @@ function nextGeneration() {
     HORTON.sumCurrent = 0;
     HORTON.sumNext = 0;
     HORTON.cycles++;
-    document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles;
     for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
             applyRules(i, j);
             HORTON.sumCurrent += HORTON.grid[i][j];
         }
     }
+    document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles + ' (populatie: ' + HORTON.sumCurrent + ')';
     sumNextGrid();
 
     if (HORTON.sumCurrent == HORTON.sumNext) {
-        console.log('stable population');
         HORTON.stableCycles++;
         if (HORTON.stableCycles > 10) {
-            document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles + " populatie stabila";
+            document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles + " ( populatie  " + HORTON.sumCurrent + " stabila)";
         }
     }
-
+    displaySumCurrent();
 
 }
 
