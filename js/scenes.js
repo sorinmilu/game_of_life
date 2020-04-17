@@ -319,7 +319,6 @@ function buildSceneTable(struct) {
         for (var j = 0; j < struct.blockwidth; j++) {//
             var cell = document.createElement("td");
             if (struct.struct[i][j] == 1) {
-//            cell.setAttribute("id", i + "_" + j);
                 cell.setAttribute("style", "background-color: #e2c044;");
             }
         tr.appendChild(cell);
@@ -331,7 +330,7 @@ function buildSceneTable(struct) {
     namescontainer.classList.add('scenename');
     namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
     if (struct.description) {
-        var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div';
+         var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div';
     } else {
         var newhtml = '<div class="structname">' + struct.name + '</div>';
     }

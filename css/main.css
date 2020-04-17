@@ -93,7 +93,7 @@ td.live {
 
 .mediumscenetable, .smallscenetable, .largescenetable {
     align-self: center;
-     flex: 1 0 100%;
+     /*flex: 1 0 100%;*/
 }
 
 .smallscenetable td {
@@ -121,6 +121,7 @@ td.live {
     font-size: 16px;
     align-self: center;
     padding-left: 10px;
+
 }
 
 .scenedisplay {
