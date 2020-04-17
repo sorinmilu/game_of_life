@@ -332,6 +332,7 @@ function buildSceneTable(struct) {
     namescontainer.setAttribute('id', 'struct-' + struct.id.toString());
     if (struct.description) {
         var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div>' + '</div><div class="structlaunch"><a class="l-button" href="game_of_life.html#lstruct-'+ struct.id +'">Lanseaza acest model</a></div>';
+         var newhtml = '<div class="structname">' + struct.name + '</div><div class="structdescription">' + struct.description + '</div';
     } else {
         var newhtml = '<div class="structname">' + struct.name + '</div><div class="structlaunch"><a  class="l-button"  href="game_of_life.html#lstruct-'+ struct.id +'">Lanseaza acest model</a></div>';
     }
