@@ -57,34 +57,44 @@
 <div id="nonGridContainer">
 <div class="controls">
 
-    Rows: <input id="i_rows" size="5" type="text" value="">
-    Cols: <input id="i_cols" size="5" type="text" value="">
+    Randuri: <input id="i_rows" size="5" type="text" value="">
+    Coloane: <input id="i_cols" size="5" type="text" value="">
     <button class="w-button" id="change"><span>Modifica gridul</span></button><br>
 
 
 
+    <div id="selectscontainer">
+    <fieldset class="fssel">
     <label for = "i_start">Initializare</label>
-
     <select id="i_start">
         <option value="0">Gol (setati celulele cu mouseul)</option>
         <option value="1">Populare aleatoare</option>
     </select>
-    <br>
+    </fieldset>
 
-    <button class="w-button" id="start"><span>Start</span></button>
-    <button class="w-button" id="clear"><span>Resetarea gridului</span></button>
 
+    <fieldset class="fssel">
     <label for = "i_mod">Mod de afisare</label>
     <select id="i_mod">
         <option value="0">Direct</option>
         <option value="1">Afiseaza structurile stabile</option>
         <option value="2">Afiseaza starea celulelor</option>
     </select>
+    </fieldset>
 
-    <hr>
-    <label for="i_speed">Viteza (repejor pana la foarte incet):</label>
-    <input type="range" id="i_speed" name="points" min="0" max="1000" step="100">
+    </div>
 
+    <div id="bottomcontrols">
+
+    <button class="w-button medium-b" id="start">Ruleaza</button>
+    <button class="w-button medium-b" id="clear">Resetarea gridului</button>
+
+    <fieldset class="fssel">
+        <label for="i_speed">Viteza (repejor pana la foarte incet):</label>
+        <input type="range" id="i_speed" name="points" min="0" max="1000" step="100">
+    </fieldset>
+
+    </div>
 
 
 

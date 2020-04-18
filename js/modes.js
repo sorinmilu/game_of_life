@@ -56,15 +56,28 @@
         [0,0,0,0,0]
     ];
 
+    var longbarge = [
+        [0,0,0,0,0,0,0],
+        [0,0,1,0,0,0,0],
+        [0,1,0,1,0,0,0],
+        [0,0,1,0,1,0,0],
+        [0,0,0,1,0,1,0],
+        [0,0,0,0,1,0,0],
+        [0,0,0,0,0,0,0],
+    ];
+
+
      HORTON.structures = [];
 
-     HORTON.structures.push({"id":1,  "name": 'block', "width" : 4, "height": 4, 'struct': block, 'color': '#f00', 'asymm': 0});
-     HORTON.structures.push({"id":2,"name": 'hive', "width" : 6, "height": 5, 'struct': hive, 'color': '#ff0', 'asymm': 2});
-     HORTON.structures.push({"id":3,"name": 'loaf', "width" : 6, "height": 6, 'struct': loaf, 'color': '#00f', 'asymm': 4});
-     HORTON.structures.push({"id":4,"name": 'tub', "width" : 5, "height": 5, 'struct': tub, 'color': '#f0f', 'asymm': 0});
-     HORTON.structures.push({"id":5,"name": 'barge', "width" : 7, "height": 6, 'struct': barge, 'color': '#f0f', 'asymm': 2});
-     HORTON.structures.push({"id":6,"name": 'boat', "width" : 5, "height": 5, 'struct': boat, 'color': '#f0f', 'asymm': 4});
-     HORTON.structures.push({"id":7,"name": 'ship', "width" : 5, "height": 5, 'struct': ship, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"id":1,  "name": 'Block', "width" : 4, "height": 4, 'struct': block, 'color': '#f00', 'asymm': 0});
+     HORTON.structures.push({"id":2,"name": 'Hive', "width" : 6, "height": 5, 'struct': hive, 'color': '#ff0', 'asymm': 2});
+     HORTON.structures.push({"id":3,"name": 'Loaf', "width" : 6, "height": 6, 'struct': loaf, 'color': '#00f', 'asymm': 4});
+     HORTON.structures.push({"id":4,"name": 'Tub', "width" : 5, "height": 5, 'struct': tub, 'color': '#f0f', 'asymm': 0});
+     HORTON.structures.push({"id":5,"name": 'Barge', "width" : 7, "height": 6, 'struct': barge, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"id":6,"name": 'Boat', "width" : 5, "height": 5, 'struct': boat, 'color': '#f0f', 'asymm': 4});
+     HORTON.structures.push({"id":7,"name": 'Ship', "width" : 5, "height": 5, 'struct': ship, 'color': '#f0f', 'asymm': 2});
+     HORTON.structures.push({"id":8,"name": 'Long Barge', "width" : 7, "height": 7, 'struct': longbarge, 'color': '#f0f', 'asymm': 2});
+
 
 //Structurile statice (still life) sunt structuri care raman identice de la o genratie la alta prin jocul regulilor. Acestea sunt foarte multe, aici se pot adauga
 // Structura este definita de:

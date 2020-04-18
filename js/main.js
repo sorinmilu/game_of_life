@@ -1,4 +1,5 @@
 
+//TODO: big refactoring
 
 // Initializare
 function H_initialize() {
@@ -18,6 +19,7 @@ function H_initialize() {
     HORTON.cycles = 0;
     HORTON.births = 0;
     HORTON.deaths = 0;
+    HORTON.runmode = 1; //continuous
 
     //elementele de interfata
 
@@ -55,8 +57,50 @@ function H_initialize() {
 
 }
 
+function clearGridToStart() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
+    HORTON.playing = false;
+    var startButton = document.getElementById('start');
+    startButton.innerHTML = "Start";
+    clearTimeout(HORTON.timer);
+
+    var cellsList = document.getElementsByClassName("live");
+    var cells = [];
+    for (var i = 0; i < cellsList.length; i++) {
+        cells.push(cellsList[i]);
+    }
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].setAttribute("class", "dead");
+    }
+    HORTON.sumCurrent = 0;
+    HORTON.sumNext = 0;
+    HORTON.stableCycles = 0;
+    HORTON.cycles = 0;
+    HORTON.births = 0;
+    HORTON.deaths = 0;
+
+    resetColorsOgre();
+    initializeGrids();
+    resetGrids;
+    resetInterface();
+
+}
+
+
+function resetInterface() {
+    //resetam randomul la empty
+    document.getElementById('i_start').value = 0;
+    document.getElementById('deathsreport').innerHTML = "";
+    document.getElementById('gamereport').innerHTML = "";
+    document.getElementById('populationdisplay').innerHTML = "";
+}
+
+
 //goleste si defineste cele doua griduri
 function initializeGrids() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     HORTON.grid = [];
     HORTON.nextGrid = [];
     for (var i = 0; i < HORTON.rows; i++) {
@@ -67,6 +111,8 @@ function initializeGrids() {
 
 //umple gridurile cu 0
 function resetGrids() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
             HORTON.grid[i][j] = 0;
@@ -77,6 +123,8 @@ function resetGrids() {
 
 //copiaza gridul urmator in gridul curent si apoi il goleste
 function copyAndResetGrid() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
             HORTON.grid[i][j] = HORTON.nextGrid[i][j];
@@ -87,6 +135,8 @@ function copyAndResetGrid() {
 
 // creaza tabelul de afisare a gridului
 function createTable() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     var gridContainer = document.getElementById('gridContainer');
     if (!gridContainer) {
         // Throw error
@@ -110,6 +160,8 @@ function createTable() {
 
 
 function displaySumCurrent() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     //how the fuck do we do this?
     // we need a table. We add a column to the table? mai bine incercam sa adaugam un rand
     var dtable = document.getElementById('populationdisplay');
@@ -144,6 +196,8 @@ function displaySumCurrent() {
 }
 
 function redrawGrid() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     document.getElementById('gridContainer').innerHTML = "";
     createTable();
     initializeGrids();
@@ -161,15 +215,19 @@ function cellClickHandler() {
         if(classes.indexOf("live") > -1) {
             this.setAttribute("class", "dead");
             HORTON.grid[row][col] = 0;
+            HORTON.sumCurrent--;
         } else {
             this.setAttribute("class", "live");
             HORTON.grid[row][col] = 1;
+            HORTON.sumCurrent++;
         }
 
     }
 
 // seteaza celulele din tabel conform gridului
 function updateView() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
      for (var i = 0; i < HORTON.rows; i++) {
          for (var j = 0; j < HORTON.cols; j++) {
              var cell = document.getElementById(i + "_" + j);
@@ -215,7 +273,7 @@ function setupControlButtons() {
 
 
 function startChangeHandler() {
-    console.log(this.value);
+    console.log('F: ' + arguments.callee.name);
     //random population
     if (this.value == 1) {
         populateRandom();
@@ -258,6 +316,7 @@ function placeScene(scene) {
                 HORTON.grid[i + scene.blocky][j+scene.blockx] = 1;
                 var cell = document.getElementById((i + scene.blocky) + "_" + (j + scene.blockx));
                 cell.setAttribute("class", "live");
+                HORTON.sumCurrent++;
             }
          }
      }
@@ -265,7 +324,6 @@ function placeScene(scene) {
 
 //handler pentru schimbarea modului de afisare
 function modeChangeHandler() {
-    console.log(this.value);
     if (this.value == 0) {
         resetColorsOgre();
         document.getElementById('stillsreport').innerHTML = '';
@@ -278,61 +336,93 @@ function modeChangeHandler() {
 
 // handler pentru popularea aleatoare
 function populateRandom() {
+    console.log('F: ' + arguments.callee.name);
     if (HORTON.playing) return;
-    clearButtonHandler();
+//    clearButtonHandler();
+
     for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
+            HORTON.nextGrid[i][j] = 0;
             var isLive = Math.round(Math.random());
             if (isLive == 1) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.setAttribute("class", "live");
                 HORTON.grid[i][j] = 1;
+                HORTON.sumCurrent++;
             }
         }
     }
+
+    console.log(HORTON.grid);
+    console.log(HORTON.nextGrid);
 }
 
 // handler pentru modificarea sliderului de viteza
 function sliderChangeHandler() {
-    clearTimeout(HORTON.timer);
-    HORTON.reproductionTime = this.value;
-    if (HORTON.playing) {
-        HORTON.timer = setTimeout(play, HORTON.reproductionTime);
+    var startButton = document.getElementById('start');
+    if (this.value == 1000) {
+        //switch to step-by-step mode
+        console.log('switching to runmode 0');
+        clearTimeout(HORTON.timer);
+        startButton.innerHTML = "Pasul urmator";
+        HORTON.runmode = 0;
+    } else {
+        console.log('setting runmode 1');
+        if (HORTON.playing == 1) {
+            startButton.innerHTML = "Pauza";
+        } else if (HORTON.playing == 0) {
+            startButton.innerHTML = "Ruleaza";
+        }
+        clearTimeout(HORTON.timer);
+        HORTON.reproductionTime = this.value;
+        HORTON.runmode = 1;
+        if (HORTON.playing) {
+            HORTON.timer = setTimeout(play, HORTON.reproductionTime);
+        }
     }
 }
 
 
 //goleste gridul
 function clearButtonHandler() {
-    HORTON.playing = false;
-    var startButton = document.getElementById('start');
-    startButton.innerHTML = "Start";
-    clearTimeout(HORTON.timer);
-
-    var cellsList = document.getElementsByClassName("live");
-    var cells = [];
-    for (var i = 0; i < cellsList.length; i++) {
-        cells.push(cellsList[i]);
-    }
-    for (var i = 0; i < cells.length; i++) {
-        cells[i].setAttribute("class", "dead");
-    }
-    resetColorsOgre();
-    resetGrids;
+    clearGridToStart();
 }
 
 // porneste/opreste simularea
 function startButtonHandler() {
-    if (HORTON.playing) {
-        console.log("Pause the game");
-        HORTON.playing = false;
-        this.innerHTML = "Continue";
-        clearTimeout(HORTON.timer);
-    } else {
-        console.log("Continue the game");
-        HORTON.playing = true;
-        this.innerHTML = "Pause";
-        play();
+    //daca gridul e gol, nu pornim
+
+     console.log(HORTON.grid);
+     console.log(HORTON.nextGrid);
+
+     //
+    // console.log('Sum current' + HORTON.sumCurrent);
+    // console.log('Sum next' + HORTON.sumNext);
+    //
+    // sumCurrentGrid();
+    // sumNextGrid();
+    //
+    // console.log('Sum current after' + HORTON.sumCurrent);
+    // console.log('Sum next after' + HORTON.sumNext);
+
+
+    if (HORTON.sumCurrent > 0 || HORTON.sumNext > 0) {
+
+        if (HORTON.runmode == 0) {
+            play();
+        } else if (HORTON.runmode == 1) {
+            if (HORTON.playing) {
+                console.log("Pause the game");
+                HORTON.playing = false;
+                this.innerHTML = "Ruleaza";
+                clearTimeout(HORTON.timer);
+            } else {
+                console.log("Continue the game");
+                HORTON.playing = true;
+                this.innerHTML = "Pauza";
+                play();
+            }
+        }
     }
 }
 
@@ -359,34 +449,60 @@ function changeButtonHandler() {
 
 // ruleaza simularea
 function play() {
-    if (HORTON.mode == 1) {
-        findStructures();
-    }
-    nextGeneration();
-    if (HORTON.mode == 2) {
-        displayDying();
-    }
-    copyAndResetGrid();
-    updateView();
-    if (HORTON.playing) {
-        HORTON.timer = setTimeout(play, HORTON.reproductionTime);
-    }
+    console.log('F: ' + arguments.callee.name);
+        //oprim daca sumCurrent e 0
+        console.log('SumCurrent: ' + HORTON.sumCurrent);
+        if (HORTON.sumCurrent > 0) {
+            console.log('RM play 1' + HORTON.runmode);
+            if (HORTON.mode == 1) {
+                findStructures();
+            }
+            console.log('RM play 2' + HORTON.runmode);
+            nextGeneration();
+            console.log('RM play 3' + HORTON.runmode);
+            if (HORTON.mode == 2) {
+                displayDying();
+            }
+            copyAndResetGrid();
+            updateView();
+            if (HORTON.runmode == 0) {
+                console.log('--- runmode 0 ------');
+            } else if (HORTON.runmode == 1) {
+                console.log('--- runmode 1 ------');
+                if (HORTON.playing) {
+                    HORTON.timer = setTimeout(play, HORTON.reproductionTime);
+                }
+            }
+        }
 }
+
 
 
 //genereaza noua generatie. Odata cu aceasta calculeaza modificarile de populatie si raporteaza
 //numarul de cicluri si stabilitatea populatiei.
 
 function nextGeneration() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
     HORTON.sumCurrent = 0;
     HORTON.sumNext = 0;
     HORTON.cycles++;
     for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
             applyRules(i, j);
+        }
+    }
+
+    printme(HORTON.grid);
+
+    for (var i = 0; i < HORTON.rows; i++) {
+        for (var j = 0; j < HORTON.cols; j++) {
             HORTON.sumCurrent += HORTON.grid[i][j];
         }
     }
+
+    console.log('SumCurrent nextgen: ' +HORTON.sumCurrent );
+
     document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles + ' (populatie: ' + HORTON.sumCurrent + ')';
     sumNextGrid();
 
@@ -395,24 +511,44 @@ function nextGeneration() {
         if (HORTON.stableCycles > 10) {
             document.getElementById('gamereport').innerHTML = "Cicluri: "+ HORTON.cycles + " ( populatie  " + HORTON.sumCurrent + " stabila)";
         }
+    } else {
+        HORTON.stableCycles == 0;
     }
     displaySumCurrent();
-
 }
 
 // calculeaza suma tuturor celulelor vii din gridul urmatoarei generatii
 
 function sumNextGrid() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
+    HORTON.sumNext = 0;
      for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
-            applyRules(i, j);
             HORTON.sumNext += HORTON.nextGrid[i][j];
         }
     }
 }
 
+
+function sumCurrentGrid() {
+    console.log('sum current');
+    console.log('rows: ' + HORTON.rows);
+    console.log('cols: ' + HORTON.cols);
+
+    for (var i = 0; i < HORTON.rows; i++) {
+        for (var j = 0; j < HORTON.cols; j++) {
+           // console.log(HORTON.grid[i][j]);
+            HORTON.sumCurrent += HORTON.grid[i][j];
+        }
+    }
+}
+
+
 // reseteaza toate culorile  din grid
 function resetColorsOgre() {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
        for (var i = 0; i < HORTON.rows; i++) {
         for (var j = 0; j < HORTON.cols; j++) {
                 var cell = document.getElementById(i + "_" + j);
@@ -424,6 +560,8 @@ function resetColorsOgre() {
 
 
 function printme(arr) {
+    console.log('F: ' + arguments.callee.name);
+    console.log('Runmode: ' + HORTON.runmode);
      console.log('-----------');
      for (var i = 0; i < arr.length; i++) {
          var line = '';
@@ -444,6 +582,7 @@ function printme(arr) {
 // Orice celula moarta care are exact trei vecini va deveni o celula vie (reproducere)
 
 function applyRules(row, col) {
+
     var numNeighbors = countNeighbors(row, col);
     if (HORTON.grid[row][col] == 1) {
         if (numNeighbors < 2) {

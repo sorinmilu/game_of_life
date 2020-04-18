@@ -1,3 +1,19 @@
+#selectscontainer, #bottomcontrols{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top:10px;
+}
+
+.fssel {
+    display:inline-block;
+    padding: 3px;
+}
+
+.medium-b {
+    width: 130px;
+}
+
 #populationreport {
     max-height: 200px;
     overflow: auto;
@@ -209,7 +225,8 @@ body {
     line-height: inherit;
     text-decoration: none;
     cursor: pointer;
-    border-radius: 0
+    border-radius: 0;
+    margin-right:5px;
 }
 
 .l-button {
