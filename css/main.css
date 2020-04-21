@@ -5,6 +5,23 @@
     margin-top:10px;
 }
 
+#jhctext {
+    padding-left:20px;
+}
+
+#jhchome {
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-top:10px;
+    align-items: flex-start;
+}
+
+#gamemessages {
+    margin-bottom:10px;
+    margin-top:10px;
+}
+
 .fssel {
     display:inline-block;
     padding: 3px;
@@ -17,6 +34,16 @@
 #populationreport {
     max-height: 200px;
     overflow: auto;
+}
+
+.jsvar {
+    color: #ff220c;
+    font-family: monospace;
+}
+
+.jsfunc {
+    color: #e2c044;
+    font-family: monospace;
 }
 
 
@@ -162,12 +189,11 @@ td.live {
     width: auto;
 }
 
-.scenename {
+.scenename, #gamemessages {
     color: #d0782a;
     font-size: 16px;
     align-self: center;
     padding-left: 10px;
-
 }
 
 .scenedisplay {
@@ -483,7 +509,7 @@ body {
 
 .main {
     position: relative;
-    padding-top: 40vh;
+    padding-top: 30vh;
     padding-right: 20px;
     padding-left: 60px;
     -webkit-box-orient: horizontal;
@@ -566,7 +592,8 @@ body {
     color:#96b38a;;
     font-size: 40px;
     line-height: 58px;
-    letter-spacing: -.5px
+    letter-spacing: -.5px;
+    margin-top:15px;
 }
 
 
