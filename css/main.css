@@ -9,6 +9,11 @@
     padding-left:20px;
 }
 
+.quote {
+    font-style:italic;
+    padding: 15px;
+}
+
 #jhchome {
     display:flex;
     flex-direction: row;
