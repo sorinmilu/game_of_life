@@ -51,23 +51,31 @@
 
                 <div class="typer">Simulare Game Of Life</div>
                 <div class="text-block link">
-                    Acest site contine o implementare "de baza" a simularii Game of Life, care nu este conceputa nici pentru viteza foarte mare nici pentru optimizarea memoriei folosite. Matricile sunt mentinute in memorie complet (cu valorile 0 si 1), la fiecare pas al simularii sunt vizitate toate celulele campului, nu doar cele ale caror vecinatati se pot modifica... etc. De asemenea, orice grid din aceasta implementare are margini fixe, simularea nu trece dintr-o parte in alta.
-                    O caracteristica aparte a acestei implementari este posibilitatea de identificare automata a structurilor stabile (still life) si afisarea acestora cu culori diferite. De asemenea, simularea permite mai multe configuratii de start, una dintre ele populand aleator gridul iar celelalte reprezentand anumite tipuri de configuratii esentiale in simularea Game Of Life.
+                    Acest site contine o implementare "de bază" a simulării Game of Life, care nu este concepută nici pentru viteză foarte mare nici pentru optimizarea memoriei folosite.
+                    Matricile sunt menținute în memorie complet (cu valorile 0 si 1), la fiecare pas al simulării sunt vizitate toate celulele câmpului, nu doar cele ale caror vecinătăți
+                    se pot modifica... etc. De asemenea, orice grid din aceasta implementare are margini fixe, simularea nu trece dintr-o parte in alta a tabelei.
+                    O caracteristică aparte a acestei implementări este posibilitatea de identificare automată a structurilor stabile (still life) și afișarea acestora cu culori diferite.
+                    De asemenea, simularea permite mai multe configurații de start, una dintre ele populând aleator gridul iar celelalte reprezentând anumite tipuri de configurații celebre
+                    descoperite de cei care au rulat Game Of Life.
                 </div>
 
                 <div class="typer">Identificarea structurilor stabile (still life)</div>
                 <div class="text-block link">
-                    Pus in modul "Afiseaza structurile stabile", sistemul identifica si numara cateva dintre structurile stabile care pot aparea in timpul unei simulari.
+                    Pus in modul "Afișează structurile stabile", sistemul identifică și numără câteva dintre structurile stabile care pot apărea în timpul unei simulari.
                     In acest moment, sistemul poate identifica urmatoarele structuri:
                     <br><br>
                     <div id="stillsreport"></div>
                     <br>
-                    Pentru a nu scadea performanta foarte tare, structurile stabile nu sunt identificate atunci cand sunt lipite de marginea gridului. Aceasta ar fi implicat operatii aditionale pentru fiecare structura stabila in parte.
-                    Se pot adauga mai multe structuri (in fisierul modes.js).
+                    Pentru a nu scădea performanta foarte tare, structurile stabile nu sunt identificate atunci cand sunt lipite de marginea gridului. Aceasta ar fi implicat operații adiționale
+                    pentru fiecare structură stabilă în parte.
+                    Se pot adăuga mai multe structuri (în fisierul modes.js).
                 </div>
                  <div class="typer">Modele de start predefinite</div>
                 <div class="text-block link">
-                    Structurile de pornire predefinite exemplifica tipul de patternuri stabile sau oscilante care pot aparea prin aplicarea regulilor simularii. De-a lungul timpului au fost descoperite foarte multe astfel de structuri cu geometrie aparte. Unele oscileaza, altele se deplaseaza pe o anumita directie fara sa-si modifice foarte mult structura... etc. Se pot adauga mai multe structuri de pornire prin adaugarea de noi structuri de date in fisierul scenes.js.
+                    Structurile de pornire predefinite exemplifică tipul de patternuri stabile sau oscilante care pot apărea prin aplicarea regulilor simularii.
+                    De-a lungul timpului au fost descoperite foarte multe astfel de structuri cu geometrie aparte.
+                    Unele oscilează, altele se deplasează pe o anumita direcție fără sa-și modifice foarte mult structura... etc.
+                    Se pot adăuga mai multe structuri de pornire prin adăugarea de noi structuri de date in fisierul scenes.js.
                     <br><br>
                     <div id="scenesreport"></div>
 
@@ -75,7 +83,7 @@
                 </div>
                 <div class="typer">Implementare</div>
                 <div class="text-block link">
-                    <p>Game Of Life este implementat in Javascript, pe baza unui set de functii distribuite in trei fisiere diferite.
+                    <p>Game Of Life este implementat în Javascript, pe baza unui set de funcții distribuite în trei fișiere diferite.
                          <ul>
                              <li><span class="white">main.js</span>, care conține majoritatea funcțiilor necesare simulării</li>
                              <li><span class="white">models.js</span>, care conține structurile de date în care sunt stocate structurile stabile (still life) împreună cu funcțiile necesare afișării și identificării lor</li>
@@ -85,17 +93,21 @@
                     <p>
                         Separarea funcțiilor în cele trei fișiere nu este definitivă, ele nu pot funcționa ușor unul fără celălalt. Cele trei fișiere sunt separate mai degrabă pentru comoditate. 
                     </p>
-                    <p>Variabilele globale ale aplicatiei sunt continute in namespace-ul HORTON care se initializeaza in fisierul "game_of_life.html". Implementarea se bazeaza pe doua structuri de tip array multidimensional
-                        care mentin in memorie starea curenta si starea viitoare a tabelei pe care se deruleaza simularea. Cele doua matrici se numesc <span class="jsvar">HORTON.grid</span> si <span class="jsvar">HORTON.nextGrid</span>.
-                    <p>Nucleul simularii se face prin functia "<span class="jsfunc">play()</span>" care se apeleaza repetat prin functia setTimeout. Functia play are urmatoarele componente:
+                    <p>Variabilele globale ale aplicatiei sunt continute în namespace-ul <span class="jsvar">HORTON</span> care se inițializează în fișierul "game_of_life.html".
+                        Implementarea se bazează pe două structuri de tip array multidimensional
+                        care mențin în memorie starea curenta și starea viitoare a tabelei pe care se derulează simularea.
+                        Cele doua matrici se numesc <span class="jsvar">HORTON.grid</span> și <span class="jsvar">HORTON.nextGrid</span>.
+                    <p>Nucleul simulării se face prin funcția "<span class="jsfunc">play()</span>" care se apelează repetat prin funcția standard <span class="jsfunc">setTimeout</span>.
+                    Functia play are următoarele componente:
                         <ul>
-                    <li>Functia <span class="jsfunc">nextGeneration()</span> care aplica regulile jocului si calculeaza configuratia unrmatoarei generatii a simularii, inregistrand-o in <span class="jsvar">HORTON.nextGrid</span> Face apel la: </li>
+                    <li>Funcția <span class="jsfunc">nextGeneration()</span> care aplică regulile jocului și calculează configurația următoarei generații a simulării, înregistrând-o în
+                        <span class="jsvar">HORTON.nextGrid</span> Face apel la: </li>
                                 <ul>
-                                    <li>Functia <span class="jsfunc">applyRules()</span> care aplica regulile de joc pentru fiecare celula din grid. </li>
+                                    <li>Funcția <span class="jsfunc">applyRules()</span> care aplică regulile de joc pentru fiecare celulă din grid. </li>
 
                                 </ul>
-                    <li>Functia <span class="jsfunc">copyAndResetGrid()</span> care copiaza matricea <span class="jsvar">HORTON.nextGrid</span> in matricea <span class="jsvar">HORTON.grid</span> </li>
-                    <li>Functia <span class="jsfunc">updateView()</span> care afiseaza continutul matricii <span class="jsvar">HORTON.grid</span> in tabelul de pe pagina. </li>
+                    <li>Funcția <span class="jsfunc">copyAndResetGrid()</span> care copiază matricea <span class="jsvar">HORTON.nextGrid</span> în matricea <span class="jsvar">HORTON.grid</span> </li>
+                    <li>Funcția <span class="jsfunc">updateView()</span> care afișează conținutul matricii <span class="jsvar">HORTON.grid</span> în tabelul de pe pagină. </li>
                         </ul>
                     </p>
                     <p>
