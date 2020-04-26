@@ -314,18 +314,11 @@ function XORSum(width, height, arr1, arr2) {
     return xorsum;
 }
 
-//functia afiseaza toate stills-urile in containerul stillsreport
-
-function displayStills() {
-    for (var i = 0; i < HORTON.structures.length; i++) {
-           var structcontainer = buildStillTable(HORTON.structures[i]);
-           document.getElementById('stillsreport').appendChild(structcontainer);
-    }
-}
+//functia afiseaza toate stills-urile in containerul primit
 
 function H_displayStills(container) {
     for (var i = 0; i < HORTON.structures.length; i++) {
-           var structcontainer = buildStillTable(HORTON.structures[i]);
+        var structcontainer = buildStillTable(HORTON.structures[i]);
            document.getElementById(container).appendChild(structcontainer);
     }
 }
@@ -386,10 +379,11 @@ function displayDying() {
             } else if (HORTON.grid[i][j] == 0 && HORTON.nextGrid[i][j] == 1) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.style.backgroundColor = "#ffc857";
+                HORTON.births ++;
             } else if (HORTON.grid[i][j] == 1 && HORTON.nextGrid[i][j] == 1) {
                 var cell = document.getElementById(i + "_" + j);
                 cell.style.backgroundColor = "#92aa83";
-                HORTON.births ++;
+                
             }
         }
     }

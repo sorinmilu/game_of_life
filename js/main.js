@@ -240,10 +240,37 @@ function setupControlButtons() {
 }
 
 
+function emptyStatusDisplay() {
+    document.getElementById('deathsreport').innerHTML = "";
+    document.getElementById('stillsreport').innerHTML = "";
+    document.getElementById('gamereport').innerHTML = "";
+    document.getElementById('populationdisplay').innerHTML = "";
+}
+
+function rebuildInterface() {
+    if (HORTON.mode == 0) {
+        // sa vedem ce gasim
+    } else if (HORTON.mode == 1) {
+        console.log('ze need to display ze fucking stills')
+        H_displayStills('stillsreport');
+    } else if (HORTON.mode == 2) {
+        
+    }    
+}
 
 function startChangeHandler() {
+    emptyStatusDisplay();
+    rebuildInterface();
+    HORTON.sumCurrent = 0;
+    HORTON.sumNext = 0;
+    HORTON.stableCycles = 0;
+    HORTON.cycles = 0;
+    HORTON.births = 0;
+    HORTON.deaths = 0;
     //random population
-    if (this.value == 1) {
+    if (this.value == 0) {
+        redrawGrid();
+    } else if (this.value == 1) {
         populateRandom();
     } else if (this.value > 1) {
         populateStructure(this.value);
@@ -259,10 +286,6 @@ function startChangeHandler() {
 
 
 function populateStructure(structid) {
-    document.getElementById('deathsreport').innerHTML = "";
-    document.getElementById('stillsreport').innerHTML = "";
-    document.getElementById('gamereport').innerHTML = "";
-    document.getElementById('populationdisplay').innerHTML = "";
     HORTON.births = 0;
     HORTON.deaths = 0;
 
@@ -284,6 +307,8 @@ function populateStructure(structid) {
                 document.getElementById('gridContainer').innerHTML = "";
                 createTable();
                 placeScene(HORTON.scenes[i]);
+                //aici ar trebui sa adaugam hashul
+                window.location.hash = 'lstruct-'+HORTON.scenes[i].id;
             }
         }
     }
@@ -315,17 +340,13 @@ function placeScene(scene) {
 
 //handler pentru schimbarea modului de afisare
 function modeChangeHandler() {
-    document.getElementById('stillsreport').innerHTML = "";
-    document.getElementById('deathsreport').innerHTML = "";
+    // document.getElementById('stillsreport').innerHTML = "";
     if (this.value == 0) {
         resetColorsOgre();
-        document.getElementById('stillsreport').innerHTML = '';
     }
-    if (this.value == 1) {
-        displayStills();
-    }
-
     HORTON.mode = this.value;
+    emptyStatusDisplay();
+    rebuildInterface();
 }
 
 // handler pentru popularea aleatoare
@@ -350,6 +371,7 @@ function populateRandom() {
             }
         }
     }
+    window.location.hash = '';
 }
 
 // handler pentru modificarea sliderului de viteza

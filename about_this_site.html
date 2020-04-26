@@ -28,10 +28,11 @@
                 <img src="img/logo.png" alt="Game of Life logo" id="logo">
             </a>
             <nav role="navigation" class="nav-menu w-nav-menu">
+                    <a href="index.html" class="nav-link w-nav-link">Home</a>
                     <a href="game_of_life.html" class="nav-link w-nav-link">Lansează Game of life</a>
                     <a href="about_jc.html" class="nav-link w-nav-link">Despre John Conway</a>
                     <a href="about_gol.html" class="nav-link w-nav-link">Despre Game of Life</a>
-                    <a href="about_this_site.html" class="cta nav-link w-nav-link">Despre acest site</a>
+                    <span class="cta nav-link w-nav-link">Despre acest site</span>
             </nav>
 
             <div class="menu-button w-nav-button"><img src="img/icon-hamburger-dark.svg" alt="" class="image-6"></div>
@@ -40,6 +41,14 @@
 
         <div class="container">
             <div class="main-text">
+                <div class="typer">Motivație</div>
+                <div class="text-block link">
+                    Acest site a apărut datorită suprapunerii temporale a două evenimente: necesitatea de a face un proiect pentru materia "Dezvoltarea aplicațiilor web" 
+                    la facultatea de Informatică a universității Titu Maiorescu și moartea inventatorului simulării "Game of Life", John Horton Conway, unul dintre 
+                    cei mai interesanți matematicieni ai unei generații strălucite care a ajuns, din păcate, la apus. Mi s-a părut nimerit ca acest proiect să fie un mic omagiu 
+                    adus lui Conway și odată cu el, generației din care a făcut parte, generație care a inventat și toate tehnologiile care compun "Dezvoltarea aplicațiilor WEB". 
+                </div>
+
                 <div class="typer">Simulare Game Of Life</div>
                 <div class="text-block link">
                     Acest site contine o implementare "de baza" a simularii Game of Life, care nu este conceputa nici pentru viteza foarte mare nici pentru optimizarea memoriei folosite. Matricile sunt mentinute in memorie complet (cu valorile 0 si 1), la fiecare pas al simularii sunt vizitate toate celulele campului, nu doar cele ale caror vecinatati se pot modifica... etc. De asemenea, orice grid din aceasta implementare are margini fixe, simularea nu trece dintr-o parte in alta.
@@ -66,12 +75,21 @@
                 </div>
                 <div class="typer">Implementare</div>
                 <div class="text-block link">
-                    <p>Game Of Life este implementat in Javascript, pe baza unui set de functii distribuite in trei fisiere diferite.</p>
+                    <p>Game Of Life este implementat in Javascript, pe baza unui set de functii distribuite in trei fisiere diferite.
+                         <ul>
+                             <li><span class="white">main.js</span>, care conține majoritatea funcțiilor necesare simulării</li>
+                             <li><span class="white">models.js</span>, care conține structurile de date în care sunt stocate structurile stabile (still life) împreună cu funcțiile necesare afișării și identificării lor</li>
+                             <li><span class="white">scenes.js</span>, care conține structurile de date în care sunt stocate scenele de pornire disponibile, precum și funcțiile necesare afișarii lor. /li>   
+                        </ul>   
+                    </p>
+                    <p>
+                        Separarea funcțiilor în cele trei fișiere nu este definitivă, ele nu pot funcționa ușor unul fără celălalt. Cele trei fișiere sunt separate mai degrabă pentru comoditate. 
+                    </p>
                     <p>Variabilele globale ale aplicatiei sunt continute in namespace-ul HORTON care se initializeaza in fisierul "game_of_life.html". Implementarea se bazeaza pe doua structuri de tip array multidimensional
                         care mentin in memorie starea curenta si starea viitoare a tabelei pe care se deruleaza simularea. Cele doua matrici se numesc <span class="jsvar">HORTON.grid</span> si <span class="jsvar">HORTON.nextGrid</span>.
-                    <p>Nucleul simularii se face prin functia "<span class="jsfunc">play()</span>" care se apeleaza repetat prin functia setTimeout. Functia play are urmatoarele componente
+                    <p>Nucleul simularii se face prin functia "<span class="jsfunc">play()</span>" care se apeleaza repetat prin functia setTimeout. Functia play are urmatoarele componente:
                         <ul>
-                    <li>Functia <span class="jsfunc">nextGeneration()</span> care aplica regulile jocului si calculeaza configuratia unrmatoarei generatii a simularii, inregistrand-o in <span class="jsvar">HORTON.nextGrid</span> Face apel la functia: </li>
+                    <li>Functia <span class="jsfunc">nextGeneration()</span> care aplica regulile jocului si calculeaza configuratia unrmatoarei generatii a simularii, inregistrand-o in <span class="jsvar">HORTON.nextGrid</span> Face apel la: </li>
                                 <ul>
                                     <li>Functia <span class="jsfunc">applyRules()</span> care aplica regulile de joc pentru fiecare celula din grid. </li>
 
@@ -80,15 +98,21 @@
                     <li>Functia <span class="jsfunc">updateView()</span> care afiseaza continutul matricii <span class="jsvar">HORTON.grid</span> in tabelul de pe pagina. </li>
                         </ul>
                     </p>
-
-
-
+                    <p>
+                        Jocul poate fi urmărit în trei moduri de afișare: 
+                        <ul>
+                            <li><span class="white">Direct:</span> Se vor afișa doar numarul de cicluri, populația precum și un grafic de evoluție a populației</li>
+                            <li><span class="white">Afișează structurile stabile:</span> Se vor afișa informațiile de la modul direct și, în plus, programul va identifica prezența pe tabelă a structurilor
+                                stabile. În cazul în care acestea sunt identificate, vor fi colorate pe tablă în mod corespunzător iar numărul lor va fi afișat ca informație suplimentară
+                            </li>
+                            <li><span class="white">Afișează starea celulelor:</span> Se vor afișa pe tablă, la fiecare pas, celulele care urmează să moară la următoarea iterație, cele care urmează să se nască și cele care rămân în viață
+                                 cu culori diferite. Numărul de "nașteri" și "morți" se va afișa în spațiul din dreapta tabelei. 
+                            </li>
+                        </ul>    
+                    </p>    
                 </div>
-
-
-
         </div>
-
+    </div>
     </body>
      <script src="js/modes.js"></script>
     <script src="js/scenes.js"></script>

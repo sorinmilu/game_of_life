@@ -16,9 +16,10 @@
                 <img src="img/logo.png" alt="Game of Life logo" id="logo">
             </a>
             <nav role="navigation" class="nav-menu w-nav-menu">
+                    <a href="index.html" class="nav-link w-nav-link">Home</a>
                     <a href="game_of_life.html" class="nav-link w-nav-link">Lansează Game of life</a>
                     <a href="about_jc.html" class="nav-link w-nav-link">Despre John Conway</a>
-                    <a href="about_gol.html" class="cta nav-link w-nav-link">Despre Game of Life</a>
+                    <span class="cta nav-link w-nav-link">Despre Game of Life</span>
                     <a href="about_this_site.html" class="nav-link w-nav-link">Despre acest site</a>
             </nav>
 
@@ -30,12 +31,13 @@
             <div class="main-text">
                 <div class="typer">Game of Life</div>
                 <div class="text-block link">
-                    <p>Game of Life este un sistem discret bidimensional si ortogonal de modelare a unei populatii de celule. Game of Life face parte din categoria mai generala numita Automate Celulare.</p>
+                    <p>Game of Life este un sistem discret bidimensional si ortogonal de modelare a unei populatii de celule. Game of Life face parte din categoria mai generala numita Automate Celulare,
+                         care sunt spatii discrete (in oricate dimensiuni) impartite in celule, care pot avea mai multe stari, starea fiecarei celule fiind cumva dependenta de vecinatatile acesteia.</p>
                 </div>
                 <div class="typer">Cum functioneaza Game of Life</div>
                 <div class="text-block link">
                 <p>
-                Se porneste de la o retea ortogonala (grid) de celule, unele dintre ele fiind "in viata", celelalte moarte. Simularea se deruleaza pas cu pas, la fiecare pas se calculeaza viitoarea stare a fiecarei celule in functie de urmatoarele reguli:
+                Se porneste de la o retea bidimensionala, ortogonala (grid) de celule, unele dintre ele fiind "in viata", celelalte moarte. Simularea se deruleaza pas cu pas, la fiecare pas se calculeaza viitoarea stare a fiecarei celule in functie de urmatoarele reguli:
                     <ul>
                         <li>Orice celula vie care are mai putin de doi vecini vii moare de izolare</li>
                         <li>Orice celula vie care are doi sau trei vecini traieste</li>
@@ -43,7 +45,6 @@
                         <li>Orice celula moarta care are exact trei vecini va deveni o celula vie (reproducere)</li>
                     </ul>
                 </p>
-
 
                 <p>Regulile, oricat de simple ar parea, au fost gasite dupa 18 luni de incercari continue. Conway, impreuna cu cativa studenti ai Universitatii din Cambridge au modificat iterativ
                 regulile prin care celulele se nasteau si mureau pana cand au gasit un echilibru convenabil. Daca regulile favorizau prea tare nasterea,
@@ -55,12 +56,13 @@
 
                 </div>
 
-                <div class="typer">De ce este interesat Game of Life?</div>
+                <div class="typer">De ce este interesant Game of Life?</div>
                 <div class="text-block link">
 
                 <p>
 
-                Game of Life este interesant pentru ca, desi un model extrem de rudimentar, poate da nastere la sisteme extrem de complexe si cu comportament neasteptat. De exemplu, exista structuri izolate numite "sill life" care raman neschimbate daca nu sunt "atinse" de alte celule. In ciuda faptului ca regulile se aplica de fiecare data, este posibil ca anumite forme sa ramana neschimbate in timp.
+                Game of Life este interesant pentru ca, desi un model extrem de rudimentar, poate da nastere la sisteme extrem de complexe si cu comportament neasteptat. 
+                De exemplu, exista structuri izolate numite "sill life" care raman neschimbate daca nu sunt "atinse" de alte celule. In ciuda faptului ca regulile se aplica de fiecare data, este posibil ca anumite forme sa ramana neschimbate in timp.
                 O alta geometrie extrem de interesanta sunt formele oscilante care se pot modifica putin geometric dar pot mentine numarul populatiei aproximativ constant un timp nedefinit.
                 </p>
 

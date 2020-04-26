@@ -51,6 +51,11 @@
     font-family: monospace;
 }
 
+.white {
+    color: #fff;
+    font-weight: 500;
+}
+
 
 #gridContainer {
     padding-bottom: 10px;
