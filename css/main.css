@@ -5,6 +5,16 @@
     margin-top:10px;
 }
 
+#footer {
+    background-image: url('../img/footer-bkg.jpg');
+    background-position: bottom;
+    background-repeat: repeat-x;
+    height:220px;
+
+    bottom: 0;
+    width: 100%;
+}
+
 #jhctext {
     padding-left:20px;
 }
@@ -514,7 +524,9 @@ body {
 .container {
     max-width: 2000px;
     padding-right: 30px;
-    padding-left: 30px
+    padding-left: 30px;
+    min-height: 80vh;
+    position:relative;
 }
 
 .main {
